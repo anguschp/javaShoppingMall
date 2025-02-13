@@ -1,5 +1,6 @@
 package com.angus.springbootmall.controller;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class ProductController {
         {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
 
     }
 
