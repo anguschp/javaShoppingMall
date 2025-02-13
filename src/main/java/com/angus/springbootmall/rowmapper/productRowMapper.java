@@ -1,5 +1,6 @@
 package com.angus.springbootmall.rowmapper;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -15,7 +16,8 @@ public class productRowMapper implements RowMapper<Product> {
 
         tempProduct.setProduct_id(rs.getInt("product_id"));
         tempProduct.setProduct_name(rs.getString("product_name"));
-        tempProduct.setCategory(rs.getString("category"));
+
+        tempProduct.setCategory(ProductCategory.valueOf(rs.getString("category")));
         tempProduct.setImage_url(rs.getString("image_url"));
         tempProduct.setPrice(rs.getInt("price"));
         tempProduct.setStock(rs.getInt("stock"));
