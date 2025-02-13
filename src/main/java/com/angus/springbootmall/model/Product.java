@@ -2,6 +2,7 @@ package com.angus.springbootmall.model;
 
 import com.angus.springbootmall.constant.ProductCategory;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Product {
@@ -10,7 +11,7 @@ public class Product {
     private String product_name;
     private ProductCategory category;
     private String image_url;
-    private int price;
+    private Integer price;
     private int stock;
     private String product_desc;
     private Date create_date;
@@ -48,11 +49,11 @@ public class Product {
         this.image_url = image_url;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
