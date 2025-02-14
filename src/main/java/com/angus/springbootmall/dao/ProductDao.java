@@ -11,4 +11,6 @@ public interface ProductDao {
 
     public int createProduct(ProductRequest product);
 
+    public void updateProductById(int id, ProductRequest product);
+
 }

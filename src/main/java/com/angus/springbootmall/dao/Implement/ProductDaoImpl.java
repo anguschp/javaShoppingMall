@@ -1,6 +1,7 @@
 package com.angus.springbootmall.dao.Implement;
 
 import com.angus.springbootmall.dao.ProductDao;
+import com.angus.springbootmall.dao.SqlFactory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.rowmapper.productRowMapper;
@@ -20,19 +21,18 @@ public class ProductDaoImpl implements ProductDao {
 
     @Autowired
     private NamedParameterJdbcTemplate JdbcTemplate;
+    @Autowired
+    private SqlFactory sqlFactory;
+
 
     @Override
     public Product getProductById(int productId) {
-
-        String sql = "select product_id, product_name, category, image_url, price, stock, " +
-                    "product_desc, created_date, last_modified_date " +
-                    "from products where product_id = :productId";
 
         HashMap<String , Object> params = new HashMap<>();
         params.put("productId", productId);
 
 
-        List<Product> queryResult = JdbcTemplate.query(sql, params, new productRowMapper());
+        List<Product> queryResult = JdbcTemplate.query(sqlFactory.sql_SearchStudentById(), params, new productRowMapper());
 
         if(queryResult.size() > 0)
         {
@@ -49,10 +49,6 @@ public class ProductDaoImpl implements ProductDao {
     public int createProduct(ProductRequest productRequest)
     {
 
-
-        String sql = "insert into products(product_name , category , image_url, price, stock, product_desc, created_date, last_modified_date)"
-                    + "values(:_name , :_category , :_imgURL , :_price , :_stock , :_desc , current_timestamp() , current_timestamp() )";
-
         HashMap<String , Object> params = new HashMap<>();
         params.put("_name" , productRequest.getProduct_name());
         params.put("_category" , productRequest.getCategory().toString());
@@ -66,13 +62,40 @@ public class ProductDaoImpl implements ProductDao {
 
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        JdbcTemplate.update(sql, new MapSqlParameterSource(params) , keyHolder);
+        JdbcTemplate.update(sqlFactory.sql_createNewProduct(), new MapSqlParameterSource(params) , keyHolder);
 
         int returnId = keyHolder.getKey().intValue();
 
         System.out.println("Created a new product in database: productId = " + returnId);
 
         return returnId;
+    }
+
+
+    public void updateProductById(int ProductId, ProductRequest productRequest)
+    {
+
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("pID", ProductId);
+        param.put("pName", productRequest.getProduct_name());
+        param.put("pCat", productRequest.getCategory().toString());
+        param.put("pURL", productRequest.getImage_url());
+        param.put("pPrice", productRequest.getPrice());
+        param.put("pStock", productRequest.getStock());
+        param.put("pDesc", productRequest.getProduct_desc());
+
+
+        try{
+
+            JdbcTemplate.update(sqlFactory.sql_updateProductById(), param);
+            System.out.println("Product has been updated successfully.");
+
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 

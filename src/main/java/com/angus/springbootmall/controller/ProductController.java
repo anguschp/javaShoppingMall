@@ -37,17 +37,33 @@ public class ProductController {
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest pr) {
 
-
         int returnProductId = productService.createProduct(pr);
 
         Product newProduct = productService.getProductById(returnProductId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
-
     }
 
 
+    @PutMapping("/products/{pid}")
+    public ResponseEntity<Product> updateProduct(@PathVariable int pid, @RequestBody @Valid ProductRequest pr) {
 
+        Product productResult = productService.getProductById(pid);
+
+        //check target product if exists
+        //if not return 404 product not found
+        if(productResult == null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        productService.updateProductById(pid, pr);
+
+        Product returnProduct = productService.getProductById(pid);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(returnProduct);
+
+    }
 
 
 

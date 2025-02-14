@@ -13,6 +13,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
 
+
+
     @Override
     public Product getProductById(int id) {
         return productDao.getProductById(id);
@@ -22,4 +24,12 @@ public class ProductServiceImpl implements ProductService {
     public int createProduct(ProductRequest product) {
         return productDao.createProduct(product);
     }
+
+
+    @Override
+    public void updateProductById(int id, ProductRequest product) {
+        productDao.updateProductById(id , product);
+    }
+
+
 }
