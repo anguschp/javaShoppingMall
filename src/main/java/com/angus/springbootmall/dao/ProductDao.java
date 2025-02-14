@@ -17,5 +17,5 @@ public interface ProductDao {
 
     public void deleteProductById(int id);
 
-    public List<Product> getAllProducts(ProductCategory category , String searchString);
+    public List<Product> getAllProducts(ProductQueryParameter param);
 }

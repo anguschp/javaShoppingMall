@@ -59,21 +59,21 @@ public class SqlFactory {
         return sqlStatement;
     }
 
-    public String sql_getAllProducts(ProductCategory category , String searchString ,  HashMap hashMap)
+    public String sql_getAllProducts(ProductQueryParameter queryParam ,  HashMap hashMap)
     {
         String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
                                 "last_modified_date from products where 1=1";
 
-        if(category != null)
+        if(queryParam.getCategory() != null)
         {
             sqlStatement = sqlStatement + " AND category = :pCategory";
-            hashMap.put("pCategory", category.name());
+            hashMap.put("pCategory", queryParam.getCategory().name());
         }
 
-        if(searchString != null)
+        if(queryParam.getSearchString() != null)
         {
             sqlStatement = sqlStatement + " AND product_name like :searchString";
-            hashMap.put("searchString" , "%" + searchString + "%");
+            hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
         }
 
 

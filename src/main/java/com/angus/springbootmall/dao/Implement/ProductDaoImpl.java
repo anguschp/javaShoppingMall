@@ -2,6 +2,7 @@ package com.angus.springbootmall.dao.Implement;
 
 import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dao.ProductDao;
+import com.angus.springbootmall.dao.ProductQueryParameter;
 import com.angus.springbootmall.dao.SqlFactory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
@@ -124,11 +125,11 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getAllProducts(ProductCategory category , String searchString) {
+    public List<Product> getAllProducts(ProductQueryParameter queryParam) {
 
         HashMap<String , Object> params = new HashMap<>();
 
-        List<Product> resultProductList = JdbcTemplate.query(sqlFactory.sql_getAllProducts(category , searchString , params) , params , new productRowMapper());
+        List<Product> resultProductList = JdbcTemplate.query(sqlFactory.sql_getAllProducts(queryParam, params) , params , new productRowMapper());
 
         return resultProductList;
 

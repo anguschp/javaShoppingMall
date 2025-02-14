@@ -1,6 +1,7 @@
 package com.angus.springbootmall.service;
 
 import com.angus.springbootmall.constant.ProductCategory;
+import com.angus.springbootmall.dao.ProductQueryParameter;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 
@@ -16,5 +17,5 @@ public interface ProductService {
 
     public void deleteProductById(int id);
 
-    public List<Product> getAllProducts(ProductCategory category , String searchString);
+    public List<Product> getAllProducts(ProductQueryParameter queryParam);
 }
