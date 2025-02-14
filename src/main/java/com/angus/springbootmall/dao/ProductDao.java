@@ -13,4 +13,5 @@ public interface ProductDao {
 
     public void updateProductById(int id, ProductRequest product);
 
+    public void deleteProductById(int id);
 }

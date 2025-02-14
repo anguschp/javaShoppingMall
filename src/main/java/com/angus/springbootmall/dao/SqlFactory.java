@@ -47,5 +47,14 @@ public class SqlFactory {
     }
 
 
+    public String sql_deleteProductById(int _productId)
+    {
+        String param1 = ":pID";
+
+        String sqlStatement = "delete from products where product_id = " + param1;
+
+        return sqlStatement;
+    }
+
 
 }

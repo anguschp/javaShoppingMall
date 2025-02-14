@@ -99,5 +99,22 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
+    @Override
+    public void deleteProductById(int id) {
 
+        HashMap<String , Object> params = new HashMap<>();
+        params.put("pID" , id);
+
+        try
+        {
+            JdbcTemplate.update(sqlFactory.sql_deleteProductById(id) , params);
+            System.out.println("Product has been deleted successfully.");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
 }
