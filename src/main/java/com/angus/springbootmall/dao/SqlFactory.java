@@ -76,6 +76,8 @@ public class SqlFactory {
             hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
         }
 
+        sqlStatement = sqlStatement + " Order by " + queryParam.getOrderBy() + " " + queryParam.getSortingType();
+
 
         return sqlStatement;
 
