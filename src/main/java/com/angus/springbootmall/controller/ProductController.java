@@ -6,13 +6,17 @@ import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class ProductController {
 
@@ -23,7 +27,9 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category ,
                                                      @RequestParam(required = false) String searchString,
                                                      @RequestParam(defaultValue = "created_date") String orderBy,
-                                                     @RequestParam(defaultValue = "desc") String sort)
+                                                     @RequestParam(defaultValue = "desc") String sort,
+                                                     @RequestParam(defaultValue = "3") @Max(1000) @Min(0) Integer pageLimit,
+                                                     @RequestParam(defaultValue = "0") @Min(0) Integer offSet)
     {
         ProductQueryParameter queryParam = new ProductQueryParameter();
 
@@ -31,6 +37,8 @@ public class ProductController {
         queryParam.setSearchString(searchString);
         queryParam.setOrderBy(orderBy);
         queryParam.setSortingType(sort);
+        queryParam.setPageLimit(pageLimit);
+        queryParam.setOffSet(offSet);
 
         List<Product> productList = productService.getAllProducts(queryParam);
 

@@ -11,7 +11,25 @@ public class ProductQueryParameter {
     private String searchString;
     private String orderBy;
     private String sortingType;
+    private Integer pageLimit;
+    private Integer offSet;
 
+
+    public Integer getPageLimit() {
+        return pageLimit;
+    }
+
+    public void setPageLimit(Integer pageLimit) {
+        this.pageLimit = pageLimit;
+    }
+
+    public Integer getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
+    }
 
     public String getOrderBy() {
         return orderBy;
