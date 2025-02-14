@@ -1,5 +1,6 @@
 package com.angus.springbootmall.dao;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 
@@ -16,5 +17,5 @@ public interface ProductDao {
 
     public void deleteProductById(int id);
 
-    public List<Product> getAllProducts();
+    public List<Product> getAllProducts(ProductCategory category , String searchString);
 }

@@ -19,9 +19,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts()
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category , @RequestParam(required = false) String searchString)
     {
-        List<Product> productList = productService.getAllProducts();
+        List<Product> productList = productService.getAllProducts(category , searchString);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

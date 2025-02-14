@@ -1,10 +1,12 @@
 package com.angus.springbootmall.dao.Implement;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dao.ProductDao;
 import com.angus.springbootmall.dao.SqlFactory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.rowmapper.productRowMapper;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,6 +25,8 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate JdbcTemplate;
     @Autowired
     private SqlFactory sqlFactory;
+    @Autowired
+    private ParameterNamesModule parameterNamesModule;
 
 
     @Override
@@ -120,11 +124,11 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts(ProductCategory category , String searchString) {
 
         HashMap<String , Object> params = new HashMap<>();
 
-        List<Product> resultProductList = JdbcTemplate.query(sqlFactory.sql_getAllProducts() , params , new productRowMapper());
+        List<Product> resultProductList = JdbcTemplate.query(sqlFactory.sql_getAllProducts(category , searchString , params) , params , new productRowMapper());
 
         return resultProductList;
 

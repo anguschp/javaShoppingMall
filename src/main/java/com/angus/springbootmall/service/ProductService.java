@@ -1,5 +1,6 @@
 package com.angus.springbootmall.service;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 
@@ -15,5 +16,5 @@ public interface ProductService {
 
     public void deleteProductById(int id);
 
-    public List<Product> getAllProducts();
+    public List<Product> getAllProducts(ProductCategory category , String searchString);
 }

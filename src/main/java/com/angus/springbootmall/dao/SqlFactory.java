@@ -1,6 +1,9 @@
 package com.angus.springbootmall.dao;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
 
 @Component
 public class SqlFactory {
@@ -56,10 +59,22 @@ public class SqlFactory {
         return sqlStatement;
     }
 
-    public String sql_getAllProducts()
+    public String sql_getAllProducts(ProductCategory category , String searchString ,  HashMap hashMap)
     {
         String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
-                                "last_modified_date from products";
+                                "last_modified_date from products where 1=1";
+
+        if(category != null)
+        {
+            sqlStatement = sqlStatement + " AND category = :pCategory";
+            hashMap.put("pCategory", category.name());
+        }
+
+        if(searchString != null)
+        {
+            sqlStatement = sqlStatement + " AND product_name like :searchString";
+            hashMap.put("searchString" , "%" + searchString + "%");
+        }
 
 
         return sqlStatement;

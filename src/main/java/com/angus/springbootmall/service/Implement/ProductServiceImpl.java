@@ -1,5 +1,6 @@
 package com.angus.springbootmall.service.Implement;
 
+import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dao.ProductDao;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
@@ -41,8 +42,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<Product> getAllProducts() {
-        return productDao.getAllProducts();
+    public List<Product> getAllProducts(ProductCategory category , String searchString) {
+        return productDao.getAllProducts(category , searchString);
     }
 
 }
