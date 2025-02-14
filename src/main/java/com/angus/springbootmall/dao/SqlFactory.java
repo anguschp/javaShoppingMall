@@ -56,5 +56,14 @@ public class SqlFactory {
         return sqlStatement;
     }
 
+    public String sql_getAllProducts()
+    {
+        String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
+                                "last_modified_date from products";
+
+
+        return sqlStatement;
+
+    }
 
 }

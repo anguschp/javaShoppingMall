@@ -4,6 +4,7 @@ import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 
 import java.net.InterfaceAddress;
+import java.util.List;
 
 public interface ProductDao {
 
@@ -14,4 +15,6 @@ public interface ProductDao {
     public void updateProductById(int id, ProductRequest product);
 
     public void deleteProductById(int id);
+
+    public List<Product> getAllProducts();
 }
