@@ -5,15 +5,19 @@ import com.angus.springbootmall.dao.ProductQueryParameter;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.ProductService;
+import com.angus.springbootmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Validated
@@ -24,12 +28,12 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category ,
+    public ResponseEntity<Page<Product>> getProducts(@RequestParam(required = false) ProductCategory category ,
                                                      @RequestParam(required = false) String searchString,
                                                      @RequestParam(defaultValue = "created_date") String orderBy,
                                                      @RequestParam(defaultValue = "desc") String sort,
                                                      @RequestParam(defaultValue = "3") @Max(1000) @Min(0) Integer pageLimit,
-                                                     @RequestParam(defaultValue = "0") @Min(0) Integer offSet)
+                                                     @RequestParam(defaultValue = "0") @Min(value = 0, message = "offset must be integer and cannot less than 0") Integer offSet)
     {
         ProductQueryParameter queryParam = new ProductQueryParameter();
 
@@ -41,8 +45,17 @@ public class ProductController {
         queryParam.setOffSet(offSet);
 
         List<Product> productList = productService.getAllProducts(queryParam);
+        Integer productCount = productService.getProductsCount(queryParam);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+
+        Page<Product> page = new Page<>();
+        page.setLimit(pageLimit);
+        page.setOffset(offSet);
+        page.setTotalRecords(productCount);
+        page.setResult(productList);
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 

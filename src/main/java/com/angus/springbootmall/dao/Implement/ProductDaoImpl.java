@@ -135,4 +135,14 @@ public class ProductDaoImpl implements ProductDao {
 
     }
 
+
+    @Override
+    public Integer getProductsCount(ProductQueryParameter queryParam) {
+
+        HashMap<String , Object> hashMap = new HashMap<>();
+
+        Integer productsCount = JdbcTemplate.queryForObject(sqlFactory.sql_getProductsCount(queryParam , hashMap) , hashMap , Integer.class);
+
+        return productsCount;
+    }
 }

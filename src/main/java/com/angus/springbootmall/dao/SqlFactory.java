@@ -1,6 +1,7 @@
 package com.angus.springbootmall.dao;
 
 import com.angus.springbootmall.constant.ProductCategory;
+import com.angus.springbootmall.dto.ProductRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class SqlFactory {
             hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
         }
 
-        //sorting
+        //sorting Products
         sqlStatement = sqlStatement + " Order by " + queryParam.getOrderBy() + " " + queryParam.getSortingType();
 
         //pagination
@@ -86,6 +87,28 @@ public class SqlFactory {
         hashMap.put("pageLimit" , queryParam.getPageLimit());
         hashMap.put("pageOffset" , queryParam.getOffSet());
 
+
+        return sqlStatement;
+
+    }
+
+
+    public String sql_getProductsCount(ProductQueryParameter queryParam , HashMap hashMap)
+    {
+        String sqlStatement = "select count(*) from products where 1=1";
+
+        //filter criteria
+        if(queryParam.getCategory() != null)
+        {
+            sqlStatement = sqlStatement + " AND category = :pCategory";
+            hashMap.put("pCategory", queryParam.getCategory().name());
+        }
+
+        if(queryParam.getSearchString() != null)
+        {
+            sqlStatement = sqlStatement + " AND product_name like :searchString";
+            hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
+        }
 
         return sqlStatement;
 
