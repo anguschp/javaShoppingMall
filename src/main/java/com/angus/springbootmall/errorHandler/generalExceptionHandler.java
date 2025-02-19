@@ -44,13 +44,13 @@ public class generalExceptionHandler {
     }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> generalExceptionHandler(Exception ex)
-    {
-
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + ex.getMessage());
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> generalExceptionHandler(Exception ex)
+//    {
+//
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + ex.getMessage());
+//    }
 
 
 }

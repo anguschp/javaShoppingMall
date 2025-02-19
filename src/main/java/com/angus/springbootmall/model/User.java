@@ -1,12 +1,19 @@
 package com.angus.springbootmall.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class User {
 
     private int user_id;
     private String email;
+
+    @JsonIgnore
     private String password;
+
     private Date created_date;
     private Date last_modified_date;
 

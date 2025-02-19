@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class UserRegisterRequest {
 
+    @Email
     @NotBlank
     String email;
     @NotBlank

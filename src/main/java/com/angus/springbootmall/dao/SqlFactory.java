@@ -137,6 +137,16 @@ public class SqlFactory {
     }
 
 
+    public String getUserByEmail(String reqEmail , HashMap map)
+    {
+        String sqlStatement = "Select user_id, email, password , created_date, last_modified_date from user where email = :email";
+
+        map.put("email" , reqEmail);
+
+        return sqlStatement;
+
+    }
+
 
 
 }
