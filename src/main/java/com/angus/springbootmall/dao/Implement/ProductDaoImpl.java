@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class ProductDaoImpl implements ProductDao {
@@ -145,4 +146,6 @@ public class ProductDaoImpl implements ProductDao {
 
         return productsCount;
     }
+
+
 }

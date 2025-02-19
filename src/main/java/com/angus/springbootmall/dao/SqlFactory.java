@@ -2,9 +2,11 @@ package com.angus.springbootmall.dao;
 
 import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dto.ProductRequest;
+import com.angus.springbootmall.dto.UserRegisterRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class SqlFactory {
@@ -66,18 +68,8 @@ public class SqlFactory {
         String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
                                 "last_modified_date from products where 1=1";
 
-        //filter criteria
-        if(queryParam.getCategory() != null)
-        {
-            sqlStatement = sqlStatement + " AND category = :pCategory";
-            hashMap.put("pCategory", queryParam.getCategory().name());
-        }
 
-        if(queryParam.getSearchString() != null)
-        {
-            sqlStatement = sqlStatement + " AND product_name like :searchString";
-            hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
-        }
+        sqlStatement = addFilterSql(sqlStatement , hashMap , queryParam);
 
         //sorting Products
         sqlStatement = sqlStatement + " Order by " + queryParam.getOrderBy() + " " + queryParam.getSortingType();
@@ -97,6 +89,14 @@ public class SqlFactory {
     {
         String sqlStatement = "select count(*) from products where 1=1";
 
+        sqlStatement = addFilterSql(sqlStatement , hashMap , queryParam);
+
+        return sqlStatement;
+
+    }
+
+    private String addFilterSql(String sqlStatement, Map<String, Object> hashMap, ProductQueryParameter queryParam)
+    {
         //filter criteria
         if(queryParam.getCategory() != null)
         {
@@ -110,8 +110,33 @@ public class SqlFactory {
             hashMap.put("searchString" , "%" + queryParam.getSearchString() + "%");
         }
 
+
+        return sqlStatement;
+    }
+
+
+    public String sql_createUser(UserRegisterRequest registerReq , HashMap hashMap)
+    {
+
+        String sqlStatement = "insert into user(email, password, created_date, last_modified_date) " +
+        "values (:inputEmail , :inputPassword , current_timestamp() , current_timestamp())" ;
+
+        hashMap.put("inputEmail" , registerReq.getEmail());
+        hashMap.put("inputPassword" , registerReq.getPassword());
+
+        return sqlStatement;
+    }
+
+    public String sql_getUserById(Integer userId , HashMap hashMap)
+    {
+        String sqlStatement = "select user_id, email, password , created_date , last_modified_date from user where user_id = :userID";
+        hashMap.put("userID" , userId);
+
         return sqlStatement;
 
     }
+
+
+
 
 }
