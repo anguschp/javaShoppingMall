@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -36,7 +38,8 @@ public class UserServiceImpl implements UserService {
         }
 
         //generate password hash value
-        String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+        //String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+        String hashedPassword = BCrypt.hashpw(userRegisterRequest.getPassword(), BCrypt.gensalt());
         userRegisterRequest.setPassword(hashedPassword);
 
         return userDao.createUser(userRegisterRequest);
@@ -58,10 +61,11 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "Email is not yet registered");
         }
 
-        String hashedInputPassword = DigestUtils.md5DigestAsHex(loginReq.getPassword().getBytes());
+        //Use BCrypt method to compare hashpassword and return true or false;
+        Boolean passwordCorrect = BCrypt.checkpw(loginReq.getPassword(), user.getPassword());
 
 
-        if(user.getPassword().equals(hashedInputPassword))
+        if(passwordCorrect)
         {
             log.info("Login success :{}" , loginReq.getEmail());
             return user;
