@@ -1,6 +1,7 @@
 package com.angus.springbootmall.service.Implement;
 
 import com.angus.springbootmall.dao.UserDao;
+import com.angus.springbootmall.dto.UserLoginRequest;
 import com.angus.springbootmall.dto.UserRegisterRequest;
 import com.angus.springbootmall.model.User;
 import com.angus.springbootmall.service.UserService;
@@ -39,5 +40,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+
+    @Override
+    public User userLogin(UserLoginRequest loginReq) {
+
+        User user = userDao.getUserByEmail(loginReq.getEmail());
+
+        if(user == null){
+            log.warn("Email is not yet registered :{}" , loginReq.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "Email is not yet registered");
+        }
+
+        if(user.getPassword().equals(loginReq.getPassword()))
+        {
+            log.info("Login success :{}" , loginReq.getEmail());
+            return user;
+        }
+        else
+        {
+            log.warn("Password is incorrect :{}" , loginReq.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "Password is incorrect");
+        }
+
     }
 }

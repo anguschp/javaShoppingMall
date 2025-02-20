@@ -1,5 +1,6 @@
 package com.angus.springbootmall.controller;
 
+import com.angus.springbootmall.dto.UserLoginRequest;
 import com.angus.springbootmall.dto.UserRegisterRequest;
 import com.angus.springbootmall.service.UserService;
 import jakarta.validation.Valid;
@@ -31,4 +32,18 @@ public class UserContoller {
     }
 
 
+    @PostMapping("/user/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest loginReq)
+    {
+
+        User user = userService.userLogin(loginReq);
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+
 }
+
+
+

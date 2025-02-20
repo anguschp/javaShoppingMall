@@ -1,5 +1,6 @@
 package com.angus.springbootmall.service;
 
+import com.angus.springbootmall.dto.UserLoginRequest;
 import com.angus.springbootmall.dto.UserRegisterRequest;
 import com.angus.springbootmall.model.User;
 
@@ -9,4 +10,5 @@ public interface UserService {
 
     public User getUserById(Integer userId);
 
+    public User userLogin(UserLoginRequest loginReq);
 }
