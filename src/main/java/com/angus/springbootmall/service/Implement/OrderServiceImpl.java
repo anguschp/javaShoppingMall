@@ -3,6 +3,7 @@ package com.angus.springbootmall.service.Implement;
 import com.angus.springbootmall.dao.OrderDao;
 import com.angus.springbootmall.dao.ProductDao;
 import com.angus.springbootmall.dto.OrderRequset;
+import com.angus.springbootmall.model.Order;
 import com.angus.springbootmall.model.OrderItem;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.OrderService;
@@ -51,6 +52,18 @@ public class OrderServiceImpl implements OrderService {
 
 
         return orderId;
+    }
 
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+
+        Order returnOrder = orderDao.getOrderById(orderId);
+
+        List<OrderItem> relatedOrderItems = orderDao.getItemsByOrderId(orderId);
+
+        returnOrder.setOrderItemList(relatedOrderItems);
+
+        return returnOrder;
     }
 }

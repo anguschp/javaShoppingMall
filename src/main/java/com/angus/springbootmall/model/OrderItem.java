@@ -7,6 +7,24 @@ public class OrderItem {
     private int product_id;
     private int quantity;
     private double amount;
+    private String product_name;
+    private String product_imgURL;
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public String getProduct_imgURL() {
+        return product_imgURL;
+    }
+
+    public void setProduct_imgURL(String product_img) {
+        this.product_imgURL = product_img;
+    }
 
     public int getOrder_item_id() {
         return order_item_id;

@@ -174,5 +174,29 @@ public class SqlFactory {
     }
 
 
+    public String sql_getOrderById(Integer orderId , HashMap map)
+    {
+        String sqlStatement = "select order_id , user_id , total_amount , created_date , last_modified_date " +
+                                "from `order` where order_id = :order_id";
+
+        map.put("order_id" , orderId);
+
+        return sqlStatement;
+
+    }
+
+
+    public String getItemsByOrderId(Integer orderId , HashMap map)
+    {
+        String sqlStatement = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount," +
+                "p.product_name, p.image_url FROM order_item oi " +
+                "left join products p " +
+                "on oi.product_id = p.product_id " +
+                "where oi.order_id = :order_id ;";
+
+        map.put("order_id" , orderId);
+
+        return sqlStatement;
+    }
 
 }

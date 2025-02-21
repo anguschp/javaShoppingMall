@@ -5,6 +5,7 @@ import com.angus.springbootmall.model.Order;
 import com.angus.springbootmall.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,9 @@ public class OrderController {
 
         Integer orderId = orderService.createOrder(userId , orderReq);
 
+        Order returnOrder = orderService.getOrderById(orderId);
 
-        return ResponseEntity.status(201).body(orderId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnOrder);
 
     }
 
