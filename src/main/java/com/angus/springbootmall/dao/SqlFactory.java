@@ -3,9 +3,12 @@ package com.angus.springbootmall.dao;
 import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.dto.UserRegisterRequest;
+import com.angus.springbootmall.model.OrderItem;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -142,6 +145,29 @@ public class SqlFactory {
         String sqlStatement = "Select user_id, email, password , created_date, last_modified_date from user where email = :email";
 
         map.put("email" , reqEmail);
+
+        return sqlStatement;
+
+    }
+
+
+    public String sql_createNewOrder(Integer userId, Integer totalAmount , HashMap map)
+    {
+
+        String sqlStatement = "insert into `order`(user_id , total_amount , created_date , last_modified_date) " +
+                "values (:user_id , :totalAmount , current_timestamp() , current_timestamp())";
+
+        map.put("user_id" , userId);
+        map.put("totalAmount" , totalAmount);
+
+        return sqlStatement;
+    }
+
+    public String sql_createOrderItems(int orderId , List<OrderItem> orderItems)
+    {
+        String sqlStatement = "insert into order_item(order_id , product_id , quantity , amount) "+
+                "values ( :order_id , :product_id , :quantity , :amount )";
+
 
         return sqlStatement;
 
