@@ -148,4 +148,15 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
+    @Override
+    public void updateStock(Integer productId, Integer stockChange)
+    {
+
+        HashMap<String , Object> hashMap = new HashMap<>();
+
+        JdbcTemplate.update(sqlFactory.updateProductStock(productId , stockChange, hashMap), hashMap);
+
+
+
+    }
 }
