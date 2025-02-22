@@ -186,7 +186,7 @@ public class SqlFactory {
     }
 
 
-    public String getItemsByOrderId(Integer orderId , HashMap map)
+    public static String getItemsByOrderId(Integer orderId , HashMap map)
     {
         String sqlStatement = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount," +
                 "p.product_name, p.image_url FROM order_item oi " +
@@ -197,6 +197,16 @@ public class SqlFactory {
         map.put("order_id" , orderId);
 
         return sqlStatement;
+    }
+
+    public static String updateProductStock(Integer productId, Integer stockChange, HashMap map)
+    {
+        String sqlStatment = "UPDATE products SET stock = :stockChange , last_modified_date = current_timestamp() where  product_id = :productId";
+
+        map.put("stockChange" , stockChange);
+        map.put("productId" , productId);
+
+        return sqlStatment;
     }
 
 }
