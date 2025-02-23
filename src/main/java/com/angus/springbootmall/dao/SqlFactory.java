@@ -1,9 +1,10 @@
 package com.angus.springbootmall.dao;
 
-import com.angus.springbootmall.dto.OrderQueryParameter;
-import com.angus.springbootmall.dto.ProductQueryParameter;
+import com.angus.springbootmall.constant.ProductCategory;
+import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.dto.UserRegisterRequest;
 import com.angus.springbootmall.model.OrderItem;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class SqlFactory {
         return sqlStatement;
     }
 
-    public String sql_getAllProducts(ProductQueryParameter queryParam , HashMap hashMap)
+    public String sql_getAllProducts(ProductQueryParameter queryParam ,  HashMap hashMap)
     {
         //default sql statement
         String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
@@ -233,6 +234,16 @@ public class SqlFactory {
         }
 
         return sqlStatement;
+    }
+
+    public static String updateProductStock(Integer productId, Integer stockChange, HashMap map)
+    {
+        String sqlStatment = "UPDATE products SET stock = :stockChange , last_modified_date = current_timestamp() where  product_id = :productId";
+
+        map.put("stockChange" , stockChange);
+        map.put("productId" , productId);
+
+        return sqlStatment;
     }
 
 }

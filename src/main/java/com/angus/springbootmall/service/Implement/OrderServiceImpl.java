@@ -3,6 +3,7 @@ package com.angus.springbootmall.service.Implement;
 import com.angus.springbootmall.dao.OrderDao;
 import com.angus.springbootmall.dao.ProductDao;
 import com.angus.springbootmall.dao.UserDao;
+import com.angus.springbootmall.dao.UserDao;
 import com.angus.springbootmall.dto.OrderQueryParameter;
 import com.angus.springbootmall.dto.OrderRequset;
 import com.angus.springbootmall.model.Order;
@@ -40,6 +41,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Integer createOrder(int userId, OrderRequset orderReq) {
 
+        User checkUser = userDao.getUserById(userId);
+
+        if(checkUser == null){
+            log.warn("User not exist {}", userId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+
         Integer orderPrice = 0;
         List<OrderItem> orderItemList = new ArrayList<>();
 
@@ -47,6 +56,21 @@ public class OrderServiceImpl implements OrderService {
 
             int tempProductId = orderReq.getOrderList().get(i).getProductId();
             Product tempProduct = productDao.getProductById(tempProductId);
+
+            if(tempProduct == null){
+                log.warn("Product does not exist in the system: {}", tempProductId);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+
+            //check if the stock have enough quantity for sale
+            if(orderReq.getOrderList().get(i).getQuantity() > tempProduct.getStock())
+            {
+                log.warn("Product: {} has only {} on stock, cannot fullfill request amonut", tempProductId  , tempProduct.getStock() );
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+
+            productDao.updateStock(tempProduct.getProduct_id(), tempProduct.getStock() - orderReq.getOrderList().get(i).getQuantity() );
+
 
             orderPrice = orderPrice + tempProduct.getPrice() * orderReq.getOrderList().get(i).getQuantity();
 
