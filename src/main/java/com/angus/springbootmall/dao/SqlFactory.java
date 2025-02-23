@@ -1,8 +1,7 @@
 package com.angus.springbootmall.dao;
 
 import com.angus.springbootmall.constant.ProductCategory;
-import com.angus.springbootmall.dto.ProductRequest;
-import com.angus.springbootmall.dto.UserRegisterRequest;
+import com.angus.springbootmall.dto.*;
 import com.angus.springbootmall.model.OrderItem;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
