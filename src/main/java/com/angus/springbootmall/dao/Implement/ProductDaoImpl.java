@@ -1,8 +1,7 @@
 package com.angus.springbootmall.dao.Implement;
 
-import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dao.ProductDao;
-import com.angus.springbootmall.dao.ProductQueryParameter;
+import com.angus.springbootmall.dto.ProductQueryParameter;
 import com.angus.springbootmall.dao.SqlFactory;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
@@ -15,10 +14,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class ProductDaoImpl implements ProductDao {

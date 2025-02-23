@@ -1,8 +1,7 @@
 package com.angus.springbootmall.service.Implement;
 
-import com.angus.springbootmall.constant.ProductCategory;
 import com.angus.springbootmall.dao.ProductDao;
-import com.angus.springbootmall.dao.ProductQueryParameter;
+import com.angus.springbootmall.dto.ProductQueryParameter;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.ProductService;

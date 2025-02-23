@@ -1,7 +1,6 @@
-package com.angus.springbootmall.dao;
+package com.angus.springbootmall.dto;
 
 import com.angus.springbootmall.constant.ProductCategory;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 public class ProductQueryParameter {

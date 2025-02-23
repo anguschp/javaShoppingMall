@@ -1,7 +1,7 @@
 package com.angus.springbootmall.controller;
 
 import com.angus.springbootmall.constant.ProductCategory;
-import com.angus.springbootmall.dao.ProductQueryParameter;
+import com.angus.springbootmall.dto.ProductQueryParameter;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 import com.angus.springbootmall.service.ProductService;
@@ -12,12 +12,9 @@ import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Validated

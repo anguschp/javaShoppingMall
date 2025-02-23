@@ -2,6 +2,7 @@ package com.angus.springbootmall.dao.Implement;
 
 import com.angus.springbootmall.dao.OrderDao;
 import com.angus.springbootmall.dao.SqlFactory;
+import com.angus.springbootmall.dto.OrderQueryParameter;
 import com.angus.springbootmall.model.Order;
 import com.angus.springbootmall.model.OrderItem;
 import com.angus.springbootmall.rowmapper.OrderItemRowMapper;
@@ -77,7 +78,8 @@ public class OrderDaoImpl implements OrderDao {
 
 
     @Override
-    public List<OrderItem> getItemsByOrderId(Integer orderId) {
+    public List<OrderItem> getItemsByOrderId(Integer orderId)
+    {
 
         HashMap<String, Object> map = new HashMap<>();
 
@@ -91,6 +93,26 @@ public class OrderDaoImpl implements OrderDao {
         {
             return null;
         }
+    }
 
+    @Override
+    public List<Order> getUserAllOrders(OrderQueryParameter orderQueryParameter) {
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<Order> returnOrderList = JdbcTemplate.query(sqlFactory.sql_getAllUserOrders(map , orderQueryParameter) , map , new OrderRowMapper());
+
+        return returnOrderList;
+    }
+
+
+    @Override
+    public Integer getFilterOrderCount(OrderQueryParameter orderQueryParameter) {
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        Integer countResult = JdbcTemplate.queryForObject(sqlFactory.sql_getFilterOrderCount(map , orderQueryParameter) , map , Integer.class);
+
+        return countResult;
     }
 }

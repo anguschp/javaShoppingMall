@@ -1,10 +1,9 @@
 package com.angus.springbootmall.dao;
 
-import com.angus.springbootmall.constant.ProductCategory;
-import com.angus.springbootmall.dto.ProductRequest;
+import com.angus.springbootmall.dto.OrderQueryParameter;
+import com.angus.springbootmall.dto.ProductQueryParameter;
 import com.angus.springbootmall.dto.UserRegisterRequest;
 import com.angus.springbootmall.model.OrderItem;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -65,7 +64,7 @@ public class SqlFactory {
         return sqlStatement;
     }
 
-    public String sql_getAllProducts(ProductQueryParameter queryParam ,  HashMap hashMap)
+    public String sql_getAllProducts(ProductQueryParameter queryParam , HashMap hashMap)
     {
         //default sql statement
         String sqlStatement = "select product_id , product_name , category , image_url , price , stock , product_desc, created_date ," +
@@ -195,6 +194,43 @@ public class SqlFactory {
                 "where oi.order_id = :order_id ;";
 
         map.put("order_id" , orderId);
+
+        return sqlStatement;
+    }
+
+
+    public String sql_getAllUserOrders(HashMap map , OrderQueryParameter queryParam)
+    {
+        String sqlStatement = "select order_id, user_id, total_amount, created_date , last_modified_date from `order` where 1=1";
+
+        if(queryParam.getUserId() != null)
+        {
+            sqlStatement = sqlStatement + " and user_id = :userId";
+            map.put("userId" , queryParam.getUserId());
+        }
+
+
+        //sorting order
+        sqlStatement = sqlStatement + " order by created_date DESC";
+
+        //pagination
+        sqlStatement = sqlStatement + " limit :pageLimit OFFSET :pageOffset";
+        map.put("pageLimit" , queryParam.getPageLimit());
+        map.put("pageOffset" , queryParam.getOffset());
+
+        return sqlStatement;
+    }
+
+
+    public String sql_getFilterOrderCount(HashMap map , OrderQueryParameter queryParam)
+    {
+        String sqlStatement = "select count(*) from `order` where 1=1";
+
+        if(queryParam.getUserId() != null)
+        {
+            sqlStatement = sqlStatement + " AND user_id = :userId";
+            map.put("userId" , queryParam.getUserId());
+        }
 
         return sqlStatement;
     }

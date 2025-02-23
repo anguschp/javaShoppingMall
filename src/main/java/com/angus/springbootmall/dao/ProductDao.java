@@ -1,10 +1,9 @@
 package com.angus.springbootmall.dao;
 
-import com.angus.springbootmall.constant.ProductCategory;
+import com.angus.springbootmall.dto.ProductQueryParameter;
 import com.angus.springbootmall.dto.ProductRequest;
 import com.angus.springbootmall.model.Product;
 
-import java.net.InterfaceAddress;
 import java.util.List;
 
 public interface ProductDao {
