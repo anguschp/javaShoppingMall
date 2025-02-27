@@ -40,6 +40,7 @@ public class ProductController {
         queryParam.setSortingType(sort);
         queryParam.setPageLimit(pageLimit);
         queryParam.setOffSet(offSet);
+        System.out.println("This is offset no.: " + offSet);
 
         List<Product> productList = productService.getAllProducts(queryParam);
         Integer productCount = productService.getProductsCount(queryParam);
@@ -100,7 +101,7 @@ public class ProductController {
 
         Product returnProduct = productService.getProductById(pid);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(returnProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(returnProduct);
 
     }
 

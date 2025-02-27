@@ -53,19 +53,18 @@ public class ProductDaoImpl implements ProductDao {
     {
 
         HashMap<String , Object> params = new HashMap<>();
+
         params.put("_name" , productRequest.getProduct_name());
         params.put("_category" , productRequest.getCategory().toString());
         params.put("_imgURL" , productRequest.getImage_url());
         params.put("_price" , productRequest.getPrice());
         params.put("_stock" , productRequest.getStock());
-        if(productRequest.getProduct_desc() != null)
-        {
-            params.put("_desc" , productRequest.getProduct_desc());
-        }
+        params.put("_desc" , productRequest.getProduct_desc());
+
 
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        JdbcTemplate.update(sqlFactory.sql_createNewProduct(), new MapSqlParameterSource(params) , keyHolder);
+        JdbcTemplate.update(sqlFactory.sql_createNewProduct(params), new MapSqlParameterSource(params) , keyHolder);
 
         int returnId = keyHolder.getKey().intValue();
 

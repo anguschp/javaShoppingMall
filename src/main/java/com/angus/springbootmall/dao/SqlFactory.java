@@ -27,7 +27,7 @@ public class SqlFactory {
     }
 
 
-    public String sql_createNewProduct()
+    public String sql_createNewProduct(HashMap params)
     {
 
         String param1 = ":_name";
@@ -36,6 +36,8 @@ public class SqlFactory {
         String param4 = ":_price";
         String param5 = ":_stock";
         String param6 = ":_desc";
+
+
 
         String sqlStatement =
         "insert into products(product_name , category , image_url, price, stock, product_desc, created_date, last_modified_date)" +
